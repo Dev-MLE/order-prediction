@@ -57,3 +57,6 @@ build/
 .cache/
 .mypy_cache/
 pytest_cache/
+../workspaces/order-prediction/feature_pipeline/feature_pipeline.log
+./workspaces/order-prediction/feature_pipeline/feature_pipeline.log
+*./workspaces/order-prediction/feature_pipeline/feature_pipeline.log
