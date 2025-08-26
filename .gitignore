@@ -1,0 +1,59 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pkl
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+.ven/
+
+# Environment & config files
+.env
+*.env
+*.ini
+*.toml
+*.cfg
+
+# Data files (raw / generated)
+*.csv
+*.tsv
+*.txt
+*.xls
+*.xlsx
+*.parquet
+*.jsonl
+*.log
+
+# Model artifacts
+*.pkl
+*.joblib
+*.h5
+*.ckpt
+*.pt
+*.onnx
+
+# Notebook checkpoints
+.ipynb_checkpoints/
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Poetry / pip cache
+poetry.lock
+*.egg-info/
+dist/
+build/
+.cache/
+.mypy_cache/
+pytest_cache/

@@ -1,0 +1,41 @@
+[tool.poetry]
+name = "inventory-predictions"
+version = "0.1.0"
+description = ""
+authors = ["developerrr-77 <shahnoorr9955@gmail.com>"]
+readme = "README.md"
+
+# register all pipeline src directories
+packages = [
+  { include = "*", from = "feature_pipeline/src" },
+  { include = "*", from = "training_pipeline/src" },
+  { include = "*", from = "inference_pipeline/src" }
+]
+
+[tool.poetry.dependencies]
+python = ">=3.10,<3.13"
+openpyxl = "^3.1.5"
+python-dotenv = "^1.1.1"
+pyarrow = "^21.0.0"
+hopsworks = {extras = ["python"], version = "^4.3.1"}
+joblib = "^1.5.1"
+comet-ml = "^3.50.0"
+holidays = "^0.78"
+scikit-learn = "^1.7.1"
+lightgbm = "^4.6.0"
+catboost = "^1.2.8"
+torch = "^2.8.0"
+pytorch-lightning = "^2.5.3"
+pytorch-forecasting = "^1.4.0"
+pydantic-settings = "^2.10.1"
+optuna = "^4.5.0"
+xgboost = "^3.0.4"
+logger = "^1.4"
+statsmodels = "^0.14.5"
+prophet = "^1.1.5"
+uvicorn = "^0.35.0"
+fastapi = "^0.116.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
