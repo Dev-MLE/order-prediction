@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from dotenv import load_dotenv
+import logging
 import os
 
 # Load .env
@@ -43,3 +44,15 @@ class FeaturePipelineConfig:
     hopsworks_api_key: str = os.getenv("HOPSWORKS_API_KEY")
     feature_group_name: str = "demand_records"
     feature_group_version: int = 1
+
+def setup_logging(log_level: str) -> None:
+    """Set up logging configuration."""
+    logging.basicConfig(
+        level=getattr(logging, log_level),
+        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+        handlers=[
+            logging.StreamHandler(),
+            logging.FileHandler("feature_pipeline.log")
+        ]
+    )
+
