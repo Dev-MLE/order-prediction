@@ -1,4 +1,4 @@
-name: feature_pipeline
+name: training-pipeline
 
 on:
   schedule:
