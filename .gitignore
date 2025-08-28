@@ -20,12 +20,7 @@ ENV/
 *.cfg
 
 # Data files (raw / generated)
-*.csv
-*.tsv
-*.txt
-*.xls
-*.xlsx
-*.parquet
+
 *.jsonl
 *.log
 
