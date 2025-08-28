@@ -21,9 +21,10 @@ def main():
         api_key = os.getenv("COMET_API_KEY")
         workspace = os.getenv("COMET_WORKSPACE", "shah-noor")
         project_name = "inventory-prediction"
-        features_path = "/workspaces/Machine-learning/inference_pipeline/data/transformed/monthly_features.parquet"
-        good_skus_path = "/workspaces/Machine-learning/inference_pipeline/data/filtered/good_skus.csv"
-        experiment_id = ""  # Updated to match logs
+        # full path will be used while running locally
+        features_path = "data/transformed/monthly_features.parquet"
+        good_skus_path = "data/filtered/good_skus.csv"
+        experiment_id = os.getenv("COMET_API_ID") # Updated to match logs
         
         logger.info(f"Attempting to use experiment ID: {experiment_id}")
         combiner = ModelCombiner(api_key, workspace, project_name, features_path, good_skus_path, experiment_id)
