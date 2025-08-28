@@ -5,10 +5,11 @@ import logging
 def main():
     """Run the feature pipeline."""
     try:
-        config = FeaturePipelineConfig(
-            use_db=False,       # Toggle True/False
-            use_hopsworks=True  # Toggle True/False
-        )
+        config = FeaturePipelineConfig()
+        #    use_db=False,       # Toggle True/False
+        #    use_hopsworks=True,  # Toggle True/False
+        #)
+        
         pipeline = FeaturePipeline(config)
         result = pipeline.run()
         if result is not None:

@@ -37,7 +37,7 @@ class FeaturePipelineConfig:
 
     # Output
     use_hopsworks: bool = False
-    output_path: str = "/workspaces/order-prediction/data/transformed/transformed_data.csv"
+    output_path: str = "/workspaces/order-prediction/data/transformed/transformed_data.parquet"
     output_filename: str = "features.parquet"
 
     # Hopsworks
