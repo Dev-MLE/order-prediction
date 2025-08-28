@@ -15,7 +15,7 @@ class FeaturePipeline:
     
     def __init__(self, config: FeaturePipelineConfig):
         self.config = config
-        self.loader = DataLoader(config.data_path)
+        self.loader = FeaturePipelineConfig(config.data_path)
         self.cleaner = DataCleaner(config.aggregation_freq)
         self.engineer = FeatureEngineer(config.lag_periods, config.rolling_window)
     
