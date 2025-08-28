@@ -12,7 +12,7 @@ class FeaturePipelineConfig:
 
     # Data loading
     use_db: bool = False
-    data_path: str = "feature_pipeline/data/raw/sample_data.xlsx"
+    data_path: str = "/workspaces/order-prediction/data/raw/SundasPoDetail.xlsx"
 
     # Build DB connection string from env vars
     db_user: str = os.getenv("DB_USER", "user")
@@ -37,7 +37,7 @@ class FeaturePipelineConfig:
 
     # Output
     use_hopsworks: bool = False
-    output_path: str = "feature_pipeline/data/transformed/features.parquet"
+    output_path: str = "/workspaces/order-prediction/data/transformed/transformed_data.csv"
     output_filename: str = "features.parquet"
 
     # Hopsworks
