@@ -12,6 +12,8 @@ class FeaturePipelineConfig:
 
     # Data loading
     use_db: bool = False
+    # for running locally use full path, this is the path for github actions.
+    # You can add this path directly in workflow file for better consistency.
     data_path: str = "data/raw/SundasPoDetail.xlsx"
 
     # Build DB connection string from env vars
@@ -36,9 +38,9 @@ class FeaturePipelineConfig:
     rolling_window: int = 3
 
     # Output
-    use_hopsworks: bool = False
-    output_path: str = "data/transformed"
-    output_filename: str = "features.parquet"
+    use_hopsworks: bool = False # Toggle to use/avoid hopsworks storage.
+    output_path: str = "data/transformed/monthly_features.parquet"
+   # output_filename: str = "monthly_features.parquet"
 
     # Hopsworks
     hopsworks_api_key: str = os.getenv("HOPSWORKS_API_KEY")
