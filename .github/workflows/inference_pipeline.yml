@@ -41,4 +41,4 @@ jobs:
          HOPSWORKS_PROJECT_NAME: ${{ secrets.HOPSWORKS_PROJECT_NAME }}
          COMET_API_KEY: ${{ secrets.COMET_API_KEY }}
          COMET_WORKSPACE_NAME: ${{ secrets.COMET_WORKSPACE_NAME }}
-        run: poetry run python inference_pipeline/src/main.py
+        run: poetry run python inference_pipeline/src/app.py
