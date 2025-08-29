@@ -8,6 +8,7 @@ from datetime import datetime
 import os
 from dotenv import load_dotenv
 from contextlib import asynccontextmanager
+from comet_ml import API  # <-- added
 
 load_dotenv()
 
@@ -18,16 +19,40 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Load general model
+# Paths
 model_path = Path('/workspaces/Machine-learning/models/final_general_model.pkl')
-if not model_path.exists():
-    logger.error(f"Model file not found at {model_path}")
-    raise FileNotFoundError(f"Model file not found at {model_path}")
-general_model = joblib.load(model_path)
-logger.info(f"Loaded general model from {model_path}")
-
-# Load features for known SKUs
 features_path = "/workspaces/Machine-learning/inference_pipeline/data/transformed/monthly_features.parquet"
+
+# Load model: Local first, Comet fallback
+general_model = None
+if model_path.exists():
+    general_model = joblib.load(model_path)
+    logger.info(f"Loaded general model from {model_path}")
+else:
+    logger.warning(f"Local model not found at {model_path}, attempting to fetch from Comet registry")
+    try:
+        comet_api_key = os.getenv("COMET_API_KEY")
+        workspace = os.getenv("COMET_WORKSPACE_NAME")
+        model_name = os.getenv("COMET_MODEL_NAME", "final-general-model")
+        model_version = os.getenv("COMET_MODEL_VERSION", "1.0.0")
+
+        if not comet_api_key or not workspace:
+            raise ValueError("Missing COMET_API_KEY or COMET_WORKSPACE_NAME in environment variables")
+
+        api = API(api_key=comet_api_key)
+        model = api.get_model(workspace=workspace, model_name=model_name)
+        version = model.get_version(model_version)
+        artifact = version.download()
+        logger.info(f"Downloaded model {model_name}:{model_version} from Comet to {artifact}")
+
+        general_model = joblib.load(artifact)
+        logger.info("Loaded general model from Comet registry")
+
+    except Exception as e:
+        logger.error(f"Failed to fetch model from Comet: {str(e)}")
+        raise FileNotFoundError("General model not available locally or in Comet registry.")
+
+# Load features
 features_df = pd.read_parquet(features_path)
 features_df['SkuName'] = features_df['SkuName'].str.strip().str.replace(r'\s+', ' ', regex=True)
 logger.info(f"Loaded features dataset with {len(features_df)} rows and {len(features_df['SkuName'].unique())} unique SKUs")
