@@ -41,9 +41,9 @@ else:
 
         api = API(api_key=comet_api_key)
         model = api.get_model(workspace=workspace, model_name=model_name)
-        version = model.get_version(model_version)
-        artifact = version.download()
-        logger.info(f"Downloaded model {model_name}:{model_version} from Comet to {artifact}")
+        #version = model.get_version(model_version)
+        artifact = model.download()
+        logger.info(f"Downloaded model {model_name} from Comet to {artifact}")
 
         general_model = joblib.load(artifact)
         logger.info("Loaded general model from Comet registry")
