@@ -32,8 +32,8 @@ else:
     logger.warning(f"Local model not found at {model_path}, attempting to fetch from Comet registry")
     try:
         comet_api_key = os.getenv("COMET_API_KEY")
-        workspace = os.getenv("COMET_WORKSPACE_NAME")
-        model_name = os.getenv("COMET_MODEL_NAME", "final-general-model")
+        workspace = "shah-noor"
+        model_name = os.getenv("COMET_MODEL_NAME", "final_general_model")
         model_version = os.getenv("COMET_MODEL_VERSION", "1.0.0")
 
         if not comet_api_key or not workspace:
