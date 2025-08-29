@@ -33,7 +33,7 @@ else:
     try:
         comet_api_key = os.getenv("COMET_API_KEY")
         workspace = os.getenv("COMET_WORKSPACE_NAME","shah-noor")
-        model_name = os.getenv("COMET_MODEL_NAME", "final-genera-model")
+        model_name = os.getenv("COMET_MODEL_NAME", "final-general-model")
         model_version = os.getenv("COMET_MODEL_VERSION", "1.0.0")
 
         if not comet_api_key or not workspace:
