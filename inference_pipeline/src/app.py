@@ -8,7 +8,7 @@ from datetime import datetime
 import os
 from dotenv import load_dotenv
 from contextlib import asynccontextmanager
-from comet_ml import API  # <-- added
+from comet_ml import API
 
 load_dotenv()
 
@@ -32,20 +32,31 @@ else:
     logger.warning(f"Local model not found at {model_path}, attempting to fetch from Comet registry")
     try:
         comet_api_key = os.getenv("COMET_API_KEY")
-        workspace = "shah-noor"
-        model_name = os.getenv("COMET_MODEL_NAME", "final_general_model")
+        workspace = os.getenv("COMET_WORKSPACE_NAME")
+        model_name = os.getenv("COMET_MODEL_NAME", "general-inventory-model")
         model_version = os.getenv("COMET_MODEL_VERSION", "1.0.0")
 
         if not comet_api_key or not workspace:
             raise ValueError("Missing COMET_API_KEY or COMET_WORKSPACE_NAME in environment variables")
 
         api = API(api_key=comet_api_key)
-        model = api.get_model(workspace=workspace, model_name=model_name)
-        #version = model.get_version(model_version)
-        artifact = model.download()
-        logger.info(f"Downloaded model {model_name} from Comet to {artifact}")
 
-        general_model = joblib.load(artifact)
+        # Download model version from registry into local path
+        downloaded_path = api.download_registry_model(
+            workspace=workspace,
+            registry_name=model_name,
+            version=model_version,
+            output_path=str(model_path.parent),
+            expand=True  # handles zip/tar archives
+        )
+
+        # Ensure consistent filename
+        os.replace(downloaded_path, model_path)
+
+        logger.info(f"Downloaded model {model_name}:{model_version} from Comet and saved as {model_path}")
+
+        # Load into memory
+        general_model = joblib.load(model_path)
         logger.info("Loaded general model from Comet registry")
 
     except Exception as e:
